@@ -14,7 +14,7 @@ function App() {
     },
   });
   const [query, setQuery] = useState('');
-  const URL: string = `http://api.weatherapi.com/v1/forecast.json?key=${
+  const URL: string = `https://api.weatherapi.com/v1/forecast.json?key=${
     import.meta.env.VITE_KEY
   }&q=${query}&days=1&aqi=yes&alerts=no`;
 
