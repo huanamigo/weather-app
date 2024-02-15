@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import Main from './components/Main/Main';
+import NoData from './components/NoData/NoData';
+
+import styles from './App.module.scss';
+import './reset.css';
 
 function App() {
   const [data, setData] = useState({
     location: {
       name: '',
+      country: '',
     },
     current: {
       temp_c: 0,
@@ -27,10 +32,10 @@ function App() {
     },
   });
   const [query, setQuery] = useState('');
+
   const URL: string = `https://api.weatherapi.com/v1/forecast.json?key=${
     import.meta.env.VITE_KEY
   }&q=${query}&days=1&aqi=yes&alerts=no`;
-  const date = new Date();
 
   const fetchData = async (URL: string) => {
     const res = await fetch(URL);
@@ -41,6 +46,7 @@ function App() {
       setData({
         location: {
           name: data.location.name,
+          country: data.location.country,
         },
         current: {
           temp_c: data.current.temp_c,
@@ -77,28 +83,18 @@ function App() {
   }, [query, URL]);
 
   return (
-    <>
-      <div>
+    <div className={styles.container}>
+      <div className={styles.searchBar}>
         <input
           type="text"
           value={query}
           onChange={(e) => handleQueryChange(e)}
         />
-        <p>Name {data.location.name}</p>
-        <p>
-          Date
-          {String(date.toLocaleString('default', { day: '2-digit' })) +
-            String(date.toLocaleString('default', { month: 'short' }))}
-        </p>
-        <p>Current {data.current.temp_c}</p>
-        <p>Max {data.forecast.forecastday[0].day.maxtemp_c}</p>
-        <p>Min {data.forecast.forecastday[0].day.mintemp_c}</p>
-        <p>Feels {data.current.feelslike_c}</p>
-        <p>Wind speed {data.current.wind_kph}</p>
-        <p>humidity {data.current.humidity}%</p>
-        <img src={data.current.condition.icon} alt="" />
       </div>
-    </>
+      <div className={styles.wrapper}>
+        {data.location.name === '' ? <NoData /> : <Main data={data} />}
+      </div>
+    </div>
   );
 }
 
