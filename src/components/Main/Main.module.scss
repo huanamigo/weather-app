@@ -15,3 +15,16 @@
 .date {
   text-align: center;
 }
+
+.pillContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pill {
+  background-color: brown;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 10%;
+  text-align: center;
+}

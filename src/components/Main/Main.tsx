@@ -39,11 +39,27 @@ const Main = ({ data }: iData) => {
           ' ' +
           String(date.toLocaleString('default', { month: 'short' }))}
       </p>
-      <p>Max {data.forecast.forecastday[0].day.maxtemp_c}</p>
-      <p>Min {data.forecast.forecastday[0].day.mintemp_c}</p>
-      <p>Feels {data.current.feelslike_c}</p>
-      <p>Wind speed {data.current.wind_kph}</p>
-      <p>humidity {data.current.humidity}%</p>
+      <div className={styles.pillContainer}>
+        <div className={styles.pill}>
+          <p>Min/Max</p>
+          <p>
+            {data.forecast.forecastday[0].day.maxtemp_c}/
+            {data.forecast.forecastday[0].day.mintemp_c}
+          </p>
+        </div>
+        <div className={styles.pill}>
+          <p>Feels like</p>
+          <p>{data.current.feelslike_c}</p>
+        </div>
+        <div className={styles.pill}>
+          <p>Wind speed</p>
+          <p>{data.current.wind_kph}</p>
+        </div>
+        <div className={styles.pill}>
+          <p>Humidity</p>
+          <p>{data.current.humidity}%</p>
+        </div>
+      </div>
       <img src={data.current.condition.icon} alt="" />
     </div>
   );
