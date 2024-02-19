@@ -1,5 +1,5 @@
 const NoData = () => {
-  return <>Search your location</>;
+  return <></>;
 };
 
 export default NoData;

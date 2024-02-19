@@ -1,0 +1,22 @@
+.searchBar {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  input {
+    width: 100vw;
+    font-size: 70px;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+
+    &:focus,
+    &:focus-visible {
+      border: none;
+      outline: none;
+    }
+  }
+}

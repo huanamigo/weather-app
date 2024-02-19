@@ -1,0 +1,50 @@
+import styles from './SearchBar.module.scss';
+
+interface IProps {
+  query: string;
+  handleQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isOpened: boolean;
+  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchData: (URL: string) => Promise<void>;
+  URL: string;
+}
+
+const SearchBar = ({
+  handleQueryChange,
+  query,
+  isOpened,
+  setIsOpened,
+  fetchData,
+  URL,
+}: IProps) => {
+  const handleSubmit = (formData: string) => {
+    console.log(formData);
+  };
+
+  return (
+    <>
+      {isOpened ? (
+        <div className={styles.searchBar}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(query);
+              fetchData(URL);
+              setIsOpened(false);
+            }}
+          >
+            <input
+              type="text"
+              name="search"
+              placeholder="query"
+              value={query}
+              onChange={(e) => handleQueryChange(e)}
+            />
+          </form>
+        </div>
+      ) : null}
+    </>
+  );
+};
+
+export default SearchBar;

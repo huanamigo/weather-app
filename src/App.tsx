@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Main from './components/Main/Main';
 import NoData from './components/NoData/NoData';
 
 import styles from './App.module.scss';
 import './reset.css';
+import SearchBar from './components/SearchBar/SearchBar';
 
 function App() {
   const [data, setData] = useState({
@@ -32,6 +33,7 @@ function App() {
     },
   });
   const [query, setQuery] = useState('');
+  const [isOpened, setIsOpened] = useState(true);
 
   const URL: string = `https://api.weatherapi.com/v1/forecast.json?key=${
     import.meta.env.VITE_KEY
@@ -76,23 +78,24 @@ function App() {
     setQuery(String(e.target.value));
   };
 
-  useEffect(() => {
-    if (query.length > 3) {
-      fetchData(URL);
-    }
-  }, [query, URL]);
-
   return (
     <div className={styles.container}>
-      <div className={styles.searchBar}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => handleQueryChange(e)}
+      <div>
+        <SearchBar
+          handleQueryChange={handleQueryChange}
+          query={query}
+          isOpened={isOpened}
+          setIsOpened={setIsOpened}
+          fetchData={fetchData}
+          URL={URL}
         />
       </div>
       <div className={styles.wrapper}>
-        {data.location.name === '' ? <NoData /> : <Main data={data} />}
+        {data.location.name === '' ? (
+          <NoData />
+        ) : (
+          <Main data={data} isOpened={isOpened} setIsOpened={setIsOpened} />
+        )}
       </div>
     </div>
   );

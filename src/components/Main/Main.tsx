@@ -24,15 +24,24 @@ interface iData {
       }[];
     };
   };
+  isOpened: boolean;
+  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Main = ({ data }: iData) => {
+const Main = ({ data, isOpened, setIsOpened }: iData) => {
   const date = new Date();
 
   return (
     <div className={styles.container}>
-      <p className={styles.name}>{data.location.name}</p>
-      <p className={styles.country}>{data.location.country}</p>
+      <div className={styles.cityContainer}>
+        <div className={styles.cityWrapper}>
+          <p className={styles.name}>{data.location.name}</p>
+          <p className={styles.country}>{data.location.country}</p>
+        </div>
+        <div className={styles.search}>
+          <p onClick={() => setIsOpened(!isOpened)}>lupa</p>
+        </div>
+      </div>
       <p className={styles.temp}>{data.current.temp_c}°</p>
       <p className={styles.date}>
         {String(date.toLocaleString('default', { day: 'numeric' })) +
