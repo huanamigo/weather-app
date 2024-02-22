@@ -2,6 +2,7 @@ import styles from './SearchBar.module.scss';
 
 interface IProps {
   query: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
   handleQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +17,7 @@ const SearchBar = ({
   setIsOpened,
   fetchData,
   URL,
+  setQuery,
 }: IProps) => {
   const handleSubmit = (formData: string) => {
     console.log(formData);
@@ -31,6 +33,7 @@ const SearchBar = ({
               handleSubmit(query);
               fetchData(URL);
               setIsOpened(false);
+              setQuery('');
             }}
           >
             <input

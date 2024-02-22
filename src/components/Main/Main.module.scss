@@ -1,15 +1,7 @@
 .container {
   height: 100%;
   font-size: 24px;
-}
-
-.country {
-  font-weight: 700;
-}
-
-.temp {
-  text-align: center;
-  font-size: 10rem;
+  max-width: 500px;
 }
 
 .date {
@@ -19,23 +11,71 @@
 .pillContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-}
 
-.pill {
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 10%;
-  text-align: center;
+  .pill {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 10%;
+    text-align: center;
+  }
 }
 
 .cityContainer {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
+
+  .country {
+    font-weight: 700;
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+  }
 }
 
-.search {
-  display: flex;
-  align-items: center;
+.tempContainer {
+  display: grid;
+  grid-template-areas:
+    '. . icon .'
+    '. temp . .';
+
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 100px 100px;
+  position: relative;
+  margin: 2.5rem 0;
+
+  .decPill {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 70%;
+    height: 70%;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%) rotate(-45deg);
+    z-index: 1;
+    border-radius: 20rem;
+  }
+
+  .weatherIcon {
+    grid-area: icon;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    z-index: 2;
+  }
+
+  .temp {
+    z-index: 2;
+    grid-area: temp;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      text-align: center;
+      font-size: 3rem;
+    }
+  }
 }

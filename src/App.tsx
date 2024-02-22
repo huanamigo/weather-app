@@ -84,6 +84,7 @@ function App() {
         <SearchBar
           handleQueryChange={handleQueryChange}
           query={query}
+          setQuery={setQuery}
           isOpened={isOpened}
           setIsOpened={setIsOpened}
           fetchData={fetchData}

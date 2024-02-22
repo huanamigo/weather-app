@@ -42,7 +42,15 @@ const Main = ({ data, isOpened, setIsOpened }: iData) => {
           <p onClick={() => setIsOpened(!isOpened)}>lupa</p>
         </div>
       </div>
-      <p className={styles.temp}>{data.current.temp_c}°</p>
+      <div className={styles.tempContainer}>
+        <div className={styles.decPill}></div>
+        <div className={styles.temp}>
+          <p>{data.current.temp_c}°</p>
+        </div>
+        <div className={styles.weatherIcon}>
+          <img src={data.current.condition.icon} alt="" />
+        </div>
+      </div>
       <p className={styles.date}>
         {String(date.toLocaleString('default', { day: 'numeric' })) +
           ' ' +
@@ -69,7 +77,6 @@ const Main = ({ data, isOpened, setIsOpened }: iData) => {
           <p>{data.current.humidity}%</p>
         </div>
       </div>
-      <img src={data.current.condition.icon} alt="" />
     </div>
   );
 };
