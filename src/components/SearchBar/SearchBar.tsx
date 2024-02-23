@@ -40,6 +40,8 @@ const SearchBar = ({
               type="text"
               name="search"
               placeholder="query"
+              autoFocus
+              autoComplete="off"
               value={query}
               onChange={(e) => handleQueryChange(e)}
             />
