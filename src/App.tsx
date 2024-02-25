@@ -15,6 +15,7 @@ function App() {
     current: {
       temp_c: 0,
       condition: {
+        text: '',
         icon: '',
       },
       feelslike_c: 0,
@@ -53,6 +54,7 @@ function App() {
         current: {
           temp_c: data.current.temp_c,
           condition: {
+            text: data.current.condition.text,
             icon: data.current.condition.icon,
           },
           feelslike_c: data.current.feelslike_c,

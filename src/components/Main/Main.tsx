@@ -9,6 +9,7 @@ interface iData {
     current: {
       temp_c: number;
       condition: {
+        text: string;
         icon: string;
       };
       feelslike_c: number;
@@ -52,6 +53,13 @@ const Main = ({ data, isOpened, setIsOpened }: iData) => {
       </div>
       <div className={styles.tempContainer}>
         <div className={styles.decPill}></div>
+        <div className={styles.date}>
+          <p>
+            {String(date.toLocaleString('default', { day: 'numeric' })) +
+              ' ' +
+              String(date.toLocaleString('default', { month: 'short' }))}
+          </p>
+        </div>
         <div className={styles.temp}>
           <p>{data.current.temp_c}°</p>
         </div>
@@ -59,11 +67,7 @@ const Main = ({ data, isOpened, setIsOpened }: iData) => {
           <img src={data.current.condition.icon} alt="" />
         </div>
       </div>
-      <p className={styles.date}>
-        {String(date.toLocaleString('default', { day: 'numeric' })) +
-          ' ' +
-          String(date.toLocaleString('default', { month: 'short' }))}
-      </p>
+      <p className={styles.conditionText}>{data.current.condition.text}</p>
       <div className={styles.pillContainer}>
         <div className={styles.pill}>
           <p>Min/Max</p>

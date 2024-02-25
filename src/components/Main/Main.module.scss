@@ -4,7 +4,7 @@
   max-width: 500px;
 }
 
-.date {
+.conditionText {
   text-align: center;
 }
 
@@ -45,13 +45,21 @@
 .tempContainer {
   display: grid;
   grid-template-areas:
-    '. . icon .'
+    'date . icon .'
     '. temp . .';
 
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 100px 100px;
   position: relative;
   margin: 2.5rem 0;
+
+  .date {
+    grid-area: date;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .decPill {
     position: absolute;
