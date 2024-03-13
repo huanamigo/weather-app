@@ -2,6 +2,7 @@ import styles from './Main.module.scss';
 
 interface iData {
   data: {
+    loaded: boolean;
     location: {
       name: string;
       country: string;

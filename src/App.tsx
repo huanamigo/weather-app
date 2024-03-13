@@ -8,6 +8,7 @@ import SearchBar from './components/SearchBar/SearchBar';
 
 function App() {
   const [data, setData] = useState({
+    loaded: false,
     location: {
       name: '',
       country: '',
@@ -43,10 +44,14 @@ function App() {
   const fetchData = async (URL: string) => {
     const res = await fetch(URL);
     if (!res.ok) {
-      console.log(String(res.status));
+      setData({
+        ...data,
+        loaded: false,
+      });
     } else {
       const data = await res.json();
       setData({
+        loaded: true,
         location: {
           name: data.location.name,
           country: data.location.country,
@@ -72,7 +77,6 @@ function App() {
           ],
         },
       });
-      console.log(data);
     }
   };
 
@@ -87,7 +91,7 @@ function App() {
           handleQueryChange={handleQueryChange}
           query={query}
           setQuery={setQuery}
-          isOpened={isOpened}
+          isOpened={data.loaded ? isOpened : true}
           setIsOpened={setIsOpened}
           fetchData={fetchData}
           URL={URL}
