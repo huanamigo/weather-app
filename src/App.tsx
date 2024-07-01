@@ -5,35 +5,10 @@ import NoData from './components/NoData/NoData';
 import styles from './App.module.scss';
 import './reset.css';
 import SearchBar from './components/SearchBar/SearchBar';
+import { WeatherType } from './types';
 
 function App() {
-  const [data, setData] = useState({
-    loaded: false,
-    location: {
-      name: '',
-      country: '',
-    },
-    current: {
-      temp_c: 0,
-      condition: {
-        text: '',
-        icon: '',
-      },
-      feelslike_c: 0,
-      wind_kph: 0,
-      humidity: 0,
-    },
-    forecast: {
-      forecastday: [
-        {
-          day: {
-            maxtemp_c: 0,
-            mintemp_c: 0,
-          },
-        },
-      ],
-    },
-  });
+  const [data, setData] = useState<WeatherType>();
   const [query, setQuery] = useState('');
   const [isOpened, setIsOpened] = useState(true);
 
@@ -44,39 +19,14 @@ function App() {
   const fetchData = async (URL: string) => {
     const res = await fetch(URL);
     if (!res.ok) {
-      setData({
-        ...data,
-        loaded: false,
-      });
+      setData(data);
     } else {
       const data = await res.json();
-      setData({
+      const loadedData = {
+        data: WeatherType,
         loaded: true,
-        location: {
-          name: data.location.name,
-          country: data.location.country,
-        },
-        current: {
-          temp_c: data.current.temp_c,
-          condition: {
-            text: data.current.condition.text,
-            icon: data.current.condition.icon,
-          },
-          feelslike_c: data.current.feelslike_c,
-          wind_kph: data.current.wind_kph,
-          humidity: data.current.humidity,
-        },
-        forecast: {
-          forecastday: [
-            {
-              day: {
-                maxtemp_c: data.forecast.forecastday[0].day.maxtemp_c,
-                mintemp_c: data.forecast.forecastday[0].day.mintemp_c,
-              },
-            },
-          ],
-        },
-      });
+      };
+      setData(loadedData);
     }
   };
 
