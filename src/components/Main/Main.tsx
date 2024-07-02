@@ -1,11 +1,13 @@
+import { WeatherType } from '../../types';
 import styles from './Main.module.scss';
 
-interface iData {
+interface MainProps {
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  data: WeatherType;
 }
 
-const Main = ({ data, isOpened, setIsOpened }: iData) => {
+const Main = ({ isOpened, setIsOpened, data }: MainProps) => {
   const date = new Date();
 
   return (

@@ -17,19 +17,18 @@ function App() {
   }&q=${query}&days=1&aqi=yes&alerts=no`;
 
   const fetchData = async (URL: string) => {
-    const res = await fetch(URL);
-    if (!res.ok) {
-      setData(data);
-    } else {
-      const data = await res.json();
-      const loadedData = {
-        data: WeatherType,
-        loaded: true,
-      };
-      setData(loadedData);
+    try {
+      const res = await fetch(URL);
+      if (!res.ok) {
+        setData({ loaded: false } as WeatherType);
+      } else {
+        const data: WeatherType = await res.json();
+        setData({ ...data, loaded: true });
+      }
+    } catch (error) {
+      setData({ loaded: false } as WeatherType);
     }
   };
-
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(String(e.target.value));
   };
@@ -41,17 +40,21 @@ function App() {
           handleQueryChange={handleQueryChange}
           query={query}
           setQuery={setQuery}
-          isOpened={data.loaded ? isOpened : true}
+          isOpened={data?.loaded ? isOpened : true}
           setIsOpened={setIsOpened}
           fetchData={fetchData}
           URL={URL}
         />
       </div>
       <div className={styles.wrapper}>
-        {data.location.name === '' ? (
+        {data === undefined ? (
           <NoData />
         ) : (
-          <Main data={data} isOpened={isOpened} setIsOpened={setIsOpened} />
+          <Main
+            data={data as WeatherType}
+            isOpened={isOpened}
+            setIsOpened={setIsOpened}
+          />
         )}
       </div>
     </div>
