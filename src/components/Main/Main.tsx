@@ -1,36 +1,13 @@
+import { WeatherType } from '../../types';
 import styles from './Main.module.scss';
 
-interface iData {
-  data: {
-    loaded: boolean;
-    location: {
-      name: string;
-      country: string;
-    };
-    current: {
-      temp_c: number;
-      condition: {
-        text: string;
-        icon: string;
-      };
-      feelslike_c: number;
-      wind_kph: number;
-      humidity: number;
-    };
-    forecast: {
-      forecastday: {
-        day: {
-          maxtemp_c: number;
-          mintemp_c: number;
-        };
-      }[];
-    };
-  };
+interface MainProps {
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  data: WeatherType;
 }
 
-const Main = ({ data, isOpened, setIsOpened }: iData) => {
+const Main = ({ isOpened, setIsOpened, data }: MainProps) => {
   const date = new Date();
 
   return (

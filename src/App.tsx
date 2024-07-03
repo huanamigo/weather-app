@@ -5,35 +5,10 @@ import NoData from './components/NoData/NoData';
 import styles from './App.module.scss';
 import './reset.css';
 import SearchBar from './components/SearchBar/SearchBar';
+import { WeatherType } from './types';
 
 function App() {
-  const [data, setData] = useState({
-    loaded: false,
-    location: {
-      name: '',
-      country: '',
-    },
-    current: {
-      temp_c: 0,
-      condition: {
-        text: '',
-        icon: '',
-      },
-      feelslike_c: 0,
-      wind_kph: 0,
-      humidity: 0,
-    },
-    forecast: {
-      forecastday: [
-        {
-          day: {
-            maxtemp_c: 0,
-            mintemp_c: 0,
-          },
-        },
-      ],
-    },
-  });
+  const [data, setData] = useState<WeatherType>();
   const [query, setQuery] = useState('');
   const [isOpened, setIsOpened] = useState(true);
 
@@ -42,44 +17,18 @@ function App() {
   }&q=${query}&days=1&aqi=yes&alerts=no`;
 
   const fetchData = async (URL: string) => {
-    const res = await fetch(URL);
-    if (!res.ok) {
-      setData({
-        ...data,
-        loaded: false,
-      });
-    } else {
-      const data = await res.json();
-      setData({
-        loaded: true,
-        location: {
-          name: data.location.name,
-          country: data.location.country,
-        },
-        current: {
-          temp_c: data.current.temp_c,
-          condition: {
-            text: data.current.condition.text,
-            icon: data.current.condition.icon,
-          },
-          feelslike_c: data.current.feelslike_c,
-          wind_kph: data.current.wind_kph,
-          humidity: data.current.humidity,
-        },
-        forecast: {
-          forecastday: [
-            {
-              day: {
-                maxtemp_c: data.forecast.forecastday[0].day.maxtemp_c,
-                mintemp_c: data.forecast.forecastday[0].day.mintemp_c,
-              },
-            },
-          ],
-        },
-      });
+    try {
+      const res = await fetch(URL);
+      if (!res.ok) {
+        setData({ loaded: false } as WeatherType);
+      } else {
+        const data: WeatherType = await res.json();
+        setData({ ...data, loaded: true });
+      }
+    } catch (error) {
+      setData({ loaded: false } as WeatherType);
     }
   };
-
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(String(e.target.value));
   };
@@ -91,17 +40,21 @@ function App() {
           handleQueryChange={handleQueryChange}
           query={query}
           setQuery={setQuery}
-          isOpened={data.loaded ? isOpened : true}
+          isOpened={data?.loaded ? isOpened : true}
           setIsOpened={setIsOpened}
           fetchData={fetchData}
           URL={URL}
         />
       </div>
       <div className={styles.wrapper}>
-        {data.location.name === '' ? (
+        {data === undefined ? (
           <NoData />
         ) : (
-          <Main data={data} isOpened={isOpened} setIsOpened={setIsOpened} />
+          <Main
+            data={data as WeatherType}
+            isOpened={isOpened}
+            setIsOpened={setIsOpened}
+          />
         )}
       </div>
     </div>
