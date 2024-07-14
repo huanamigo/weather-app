@@ -19,10 +19,6 @@ const SearchBar = ({
   URL,
   setQuery,
 }: IProps) => {
-  const handleSubmit = (formData: string) => {
-    console.log(formData);
-  };
-
   return (
     <>
       {isOpened ? (
@@ -30,7 +26,6 @@ const SearchBar = ({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit(query);
               fetchData(URL);
               setIsOpened(false);
               setQuery('');

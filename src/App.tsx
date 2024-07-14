@@ -29,6 +29,7 @@ function App() {
       setData({ loaded: false } as WeatherType);
     }
   };
+
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(String(e.target.value));
   };
