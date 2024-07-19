@@ -10,6 +10,7 @@ import { WeatherType } from './types';
 function App() {
   const [data, setData] = useState<WeatherType>();
   const [query, setQuery] = useState('');
+  const [fetchErr, setFetchErr] = useState<string>('');
   const [isOpened, setIsOpened] = useState(true);
 
   const URL: string = `https://api.weatherapi.com/v1/forecast.json?key=${
@@ -21,8 +22,15 @@ function App() {
       const res = await fetch(URL);
       if (!res.ok) {
         setData({ loaded: false } as WeatherType);
+      }
+      if (res.status === 400) {
+        setData({ loaded: false } as WeatherType);
+        setFetchErr(
+          `Sorry, we could'nt find what you are looking for. Please try again`
+        );
       } else {
         const data: WeatherType = await res.json();
+        setFetchErr('');
         setData({ ...data, loaded: true });
       }
     } catch (error) {
@@ -44,6 +52,7 @@ function App() {
           isOpened={data?.loaded ? isOpened : true}
           setIsOpened={setIsOpened}
           fetchData={fetchData}
+          fetchErr={fetchErr}
           URL={URL}
         />
       </div>

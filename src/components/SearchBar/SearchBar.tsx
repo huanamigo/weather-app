@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styles from './SearchBar.module.scss';
 
 interface IProps {
@@ -7,6 +8,7 @@ interface IProps {
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   fetchData: (URL: string) => Promise<void>;
+  fetchErr: string;
   URL: string;
 }
 
@@ -18,7 +20,25 @@ const SearchBar = ({
   fetchData,
   URL,
   setQuery,
+  fetchErr,
 }: IProps) => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnlineChange = () => {
+      console.log('zmiana online');
+      setIsOnline(navigator.onLine);
+    };
+
+    window.addEventListener('online', handleOnlineChange);
+    window.addEventListener('offline', handleOnlineChange);
+
+    return () => {
+      window.removeEventListener('online', handleOnlineChange);
+      window.removeEventListener('offline', handleOnlineChange);
+    };
+  }, [isOnline]);
+
   return (
     <>
       {isOpened ? (
@@ -26,9 +46,11 @@ const SearchBar = ({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              fetchData(URL);
-              setIsOpened(false);
-              setQuery('');
+              if (isOnline) {
+                fetchData(URL);
+                setIsOpened(false);
+                setQuery('');
+              }
             }}
           >
             <input
@@ -41,6 +63,19 @@ const SearchBar = ({
               onChange={(e) => handleQueryChange(e)}
             />
           </form>
+          {!isOnline ? (
+            <div>
+              <p className={styles.error}>
+                {
+                  'It seems like you are offline. Please check your internet connection and try again'
+                }
+              </p>
+            </div>
+          ) : fetchErr === '' ? null : (
+            <div>
+              <p className={styles.error}>{fetchErr}</p>
+            </div>
+          )}
         </div>
       ) : null}
     </>
