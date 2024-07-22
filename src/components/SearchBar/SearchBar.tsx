@@ -26,7 +26,6 @@ const SearchBar = ({
 
   useEffect(() => {
     const handleOnlineChange = () => {
-      console.log('zmiana online');
       setIsOnline(navigator.onLine);
     };
 

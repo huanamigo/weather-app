@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { WeatherType } from '../../types';
 import styles from './Main.module.scss';
 
@@ -9,6 +10,21 @@ interface MainProps {
 
 const Main = ({ isOpened, setIsOpened, data }: MainProps) => {
   const date = new Date();
+
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setIsOpened(false);
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [setIsOpened]);
 
   return (
     <>
@@ -52,17 +68,17 @@ const Main = ({ isOpened, setIsOpened, data }: MainProps) => {
             <div className={styles.pill}>
               <p>Min/Max</p>
               <p>
-                {data.forecast.forecastday[0].day.maxtemp_c}/
-                {data.forecast.forecastday[0].day.mintemp_c}
+                {data.forecast.forecastday[0].day.mintemp_c}/
+                {data.forecast.forecastday[0].day.maxtemp_c}°C
               </p>
             </div>
             <div className={styles.pill}>
               <p>Feels like</p>
-              <p>{data.current.feelslike_c}</p>
+              <p>{data.current.feelslike_c}°C</p>
             </div>
             <div className={styles.pill}>
               <p>Wind speed</p>
-              <p>{data.current.wind_kph}</p>
+              <p>{data.current.wind_kph} km/h</p>
             </div>
             <div className={styles.pill}>
               <p>Humidity</p>
