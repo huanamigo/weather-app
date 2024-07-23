@@ -55,7 +55,7 @@ const SearchBar = ({
             <input
               type="text"
               name="search"
-              placeholder="query"
+              placeholder="Search city"
               autoFocus
               autoComplete="off"
               value={query}

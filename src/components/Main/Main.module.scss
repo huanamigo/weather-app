@@ -5,11 +5,18 @@
 }
 
 .conditionText {
+  grid-area: conditionText;
   text-align: center;
+  font-size: smaller;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pillContainer {
   display: grid;
+  grid-area: pillContainer;
+
   grid-template-columns: 1fr 1fr;
 
   .pill {
@@ -23,6 +30,8 @@
 
 .cityContainer {
   display: flex;
+  grid-area: cityContainer;
+
   justify-content: space-between;
   padding: 1rem;
 
@@ -45,40 +54,31 @@
 
 .tempContainer {
   display: grid;
+  grid-area: tempContainer;
   grid-template-areas:
-    'date . icon .'
-    '. temp . .';
+    'date conditionText'
+    'temp icon';
 
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 100px 100px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 50px 150px;
   position: relative;
   margin: 2.5rem 0;
 
   .date {
     grid-area: date;
     height: 100%;
+    font-size: smaller;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .decPill {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 70%;
-    height: 70%;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%) rotate(-45deg);
-    z-index: 1;
-    border-radius: 20rem;
-  }
-
   .weatherIcon {
     grid-area: icon;
     height: 100%;
+    min-width: 200px;
     display: flex;
-    justify-content: end;
+    justify-content: center;
     z-index: 2;
   }
 
@@ -88,9 +88,66 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    p {
+    flex-direction: column;
+
+    .tempNumber {
       text-align: center;
-      font-size: 3rem;
+      font-size: 4rem;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .container {
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'cityContainer cityContainer'
+      'tempContainer pillContainer';
+
+    .pillContainer {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      grid-template-areas:
+        '. .'
+        'pill1 pill2'
+        'pill3 pill4'
+        '. .';
+
+      .pill1 {
+        grid-area: pill1;
+      }
+      .pill2 {
+        grid-area: pill2;
+      }
+      .pill3 {
+        grid-area: pill3;
+      }
+      .pill4 {
+        grid-area: pill4;
+      }
+    }
+
+    .tempContainer {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1.25fr 1.25fr 0.75fr 0.75fr;
+      grid-template-areas:
+        'icon icon'
+        'icon icon'
+        'date temp'
+        'conditionText temp';
+
+      .conditionText {
+        align-items: start;
+      }
+
+      .date {
+        align-items: end;
+      }
     }
   }
 }

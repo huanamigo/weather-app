@@ -35,6 +35,7 @@ const Main = ({ isOpened, setIsOpened, data }: MainProps) => {
               <p className={styles.name}>{data.location.name}</p>
               <p className={styles.country}>{data.location.country}</p>
             </div>
+
             <div className={styles.search}>
               <p onClick={() => setIsOpened(!isOpened)}>
                 <svg
@@ -47,8 +48,8 @@ const Main = ({ isOpened, setIsOpened, data }: MainProps) => {
               </p>
             </div>
           </div>
+
           <div className={styles.tempContainer}>
-            <div className={styles.decPill}></div>
             <div className={styles.date}>
               <p>
                 {String(date.toLocaleString('default', { day: 'numeric' })) +
@@ -57,30 +58,34 @@ const Main = ({ isOpened, setIsOpened, data }: MainProps) => {
               </p>
             </div>
             <div className={styles.temp}>
-              <p>{data.current.temp_c}°</p>
+              <p className={styles.tempNumber}>{data.current.temp_c}°C</p>
             </div>
+            <p className={styles.conditionText}>
+              {data.current.condition.text}
+            </p>
+
             <div className={styles.weatherIcon}>
               <img src={data.current.condition.icon} alt="" />
             </div>
           </div>
-          <p className={styles.conditionText}>{data.current.condition.text}</p>
+
           <div className={styles.pillContainer}>
-            <div className={styles.pill}>
+            <div className={`${styles.pill} ${styles.pill1}`}>
               <p>Min/Max</p>
               <p>
                 {data.forecast.forecastday[0].day.mintemp_c}/
                 {data.forecast.forecastday[0].day.maxtemp_c}°C
               </p>
             </div>
-            <div className={styles.pill}>
+            <div className={`${styles.pill} ${styles.pill2}`}>
               <p>Feels like</p>
               <p>{data.current.feelslike_c}°C</p>
             </div>
-            <div className={styles.pill}>
+            <div className={`${styles.pill} ${styles.pill3}`}>
               <p>Wind speed</p>
               <p>{data.current.wind_kph} km/h</p>
             </div>
-            <div className={styles.pill}>
+            <div className={`${styles.pill} ${styles.pill4}`}>
               <p>Humidity</p>
               <p>{data.current.humidity}%</p>
             </div>
